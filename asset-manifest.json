@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Daraz-Clone/static/css/main.816bf337.css",
+    "main.js": "/Daraz-Clone/static/js/main.6916e696.js",
+    "static/js/453.ce58f9bb.chunk.js": "/Daraz-Clone/static/js/453.ce58f9bb.chunk.js",
+    "index.html": "/Daraz-Clone/index.html",
+    "main.816bf337.css.map": "/Daraz-Clone/static/css/main.816bf337.css.map",
+    "main.6916e696.js.map": "/Daraz-Clone/static/js/main.6916e696.js.map",
+    "453.ce58f9bb.chunk.js.map": "/Daraz-Clone/static/js/453.ce58f9bb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.816bf337.css",
+    "static/js/main.6916e696.js"
+  ]
+}
