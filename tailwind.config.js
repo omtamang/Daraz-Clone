@@ -12,5 +12,6 @@ module.exports = {
     },
   },
   plugins: [],
+  devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
 }
 
