@@ -16,37 +16,40 @@ export default function AuthProvider({children}){
         try {
             const response = await retrieveUsers(username)
             setData(response.data[0])
+
+            if(data.userName===username && data.password === password){
+                setId(data.id)
+                setFromlogin(true)
+                setAuthenticated(true)
+                return true
+            }
+            else{
+                setFromlogin(false)
+                setAuthenticated(false)
+                return false
+            }
         } catch (error) {
             
         }
-        if(data.userName===username && data.password === password){
-            setId(data.id)
-            setFromlogin(true)
-            setAuthenticated(true)
-            return true
-        }
-        else{
-            setFromlogin(false)
-            setAuthenticated(false)
-            return false
-        }
     }
 
-    function Sign(username, password, phone){
+    async function Sign(username, password, phone){
         const user = {
             userName: username,
             password: password,
             phoneNumber: phone
         }
-        addUser(user)
-        .then(() => {
-            setFromsignup(true)
+        
+        try {
+            const response = await addUser(user)
             setAuthenticated(true)
-        })
-        .catch((error) => console.log(error))
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     function Logout() {
+        setId(null)
         setAuthenticated(false)
     }
 

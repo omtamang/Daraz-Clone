@@ -21,31 +21,25 @@ export default function Signup(){
     const authContext = useAuth()
     const isAuthenticated = authContext.isAuthenticated
 
-    async function onSubmit(value) {
-       try {
-            const response = await retrieveUsers(value.userName)
+    function onSubmit(value) {
+        async function user() {
 
-            const name = response.data[0].userName
-            console.log(name)
-
-            name === value.userName ? setUserFound(true) : setUserFound(false)
-
-            if(userFound){
-                // authContext.Sign(value.userName, value.password, value.phoneNumber)
-                console.log("User not found")
-                setUserFound(false)
-            }
-            else{
+            try {
+                const response = await retrieveUsers(value.userName)
                 setUserFound(true)
-                console.log("user found")
+                if(!userFound){
+                    if(await authContext.Sign(value.userName, value.password, value.phoneNumber)){
+                        navigate("/")
+                    }
+                }
+            } catch (error) {
+                setUserFound(false)
+                console.log(error)
             }
+        }
 
-            if(isAuthenticated){
-                navigate("/")
-            }
-       } catch (error) {
-            console.error(error)
-       }
+        user()
+
     }
 
     function validate(value){
@@ -63,11 +57,9 @@ export default function Signup(){
             errors.password = "The length of the Password should be 6-50 characters."
         }
 
-        if(userFound){
-            errors.userName = "Username already taken."
-        }
         return errors
     }
+    
     return(
         <div className="bg-[#eff0f5] pb-8 pt-[130px]">
             <HeaderComponent/>
@@ -78,7 +70,7 @@ export default function Signup(){
 
             <div className="max-w-[760px] m-auto bg-white pt-3 mb-8 pb-8">
 
-                <Formik initialValues={{userName, phoneNumber}}
+                <Formik initialValues={{userName, phoneNumber, password}}
                 enableReinitialize={true}
                 onSubmit={onSubmit}
                 validate={validate}
@@ -91,7 +83,7 @@ export default function Signup(){
                                 
                                 <fieldset className="">
                                     <label>Phone Number*</label>
-                                    <Field type="number" className="w-full border border-gray-300 h-11 text-[16px] p-2 mt-1 outline-none" name="phoneNumber" placeholder="Enter your phone number"/>
+                                    <Field type="phoneNumber" className="w-full border border-gray-300 h-11 text-[16px] p-2 mt-1 outline-none" name="phoneNumber" placeholder="Enter your phone number"/>
                                     <ErrorMessage 
                                         name="phoneNumber" 
                                         component="div" 
@@ -102,11 +94,7 @@ export default function Signup(){
                                 <fieldset className="">
                                     <label className="flex justify-between">Full Name*</label>
                                     <Field type="text" className="w-full border border-gray-300 h-11 text-[16px] p-2 mt-1 outline-none" name="userName" placeholder="First Last"/>
-                                    <ErrorMessage
-                                        name="userName"
-                                        component="div"
-                                        className="w-full h-4 text-red-600"
-                                    />
+                                    {userFound && <div className="w-full h-4 text-red-600">Username already taken</div>}
                                 </fieldset>
 
                                 <fieldset className="">

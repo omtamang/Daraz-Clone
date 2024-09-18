@@ -14,8 +14,8 @@ export default function Login(){
     
     const authContext = useAuth()
 
-    function onSubmit(value) {
-        if(authContext.Login(value.userName, value.password)){
+    async function onSubmit(value) {
+        if(await authContext.Login(value.userName, value.password)){
             setError(false)
             navigate("/")
         }
@@ -37,8 +37,8 @@ export default function Login(){
                     <p className="font-bold"> Login with Password</p>
                 </div>
 
-                {error && <div className="w-[500px] m-auto bg-yellow-300 text-sm text-red-600 font-bold text-center p-1">
-                    <p>Invalid Information</p>
+                {error && <div className="w-[500px] m-auto bg-yellow-500 text-sm text-white font-bold text-center p-1">
+                    <p>Invalid Credentials</p>
                 </div>}
 
                 <Formik initialValues={{userName, password}}

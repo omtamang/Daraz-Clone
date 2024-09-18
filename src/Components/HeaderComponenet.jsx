@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './Security/AuthContext';
 import { retriveCartOfUser } from './api/ApiService';
 
@@ -9,8 +9,10 @@ export default function HeaderComponent() {
   const authContext = useAuth()
   const id = authContext.id
   const [count, setCount] = useState(0)
+  const navigate = useNavigate()
 
   function Logout() {
+    navigate('/login')
     authContext.Logout()
   }
 
@@ -48,7 +50,7 @@ export default function HeaderComponent() {
         <div className='flex flex-row justify-center'>
   
           <div className='mr-[80px] mt-7'>
-              <img alt='' className='max-w-[130px]' src='https://lzd-img-global.slatic.net/us/domino/3b870cb043c7f8a9741cbf66329e294e.png'></img>
+              <Link to={"/"}><img alt='' className='max-w-[130px]' src='https://lzd-img-global.slatic.net/us/domino/3b870cb043c7f8a9741cbf66329e294e.png'></img></Link>
           </div>
   
           <div className='mt-5 mb-10'>

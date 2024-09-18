@@ -70,7 +70,7 @@ export default function Cart(){
                         }
                     )
                         
-                     : <div> Empty</div>
+                     : <div className="text-center font-bold text-xl">Cart Empty</div>
                 }
             </div>
             <Footercmp/>
